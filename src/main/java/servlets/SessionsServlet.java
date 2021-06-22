@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 public class SessionsServlet extends HttpServlet {
@@ -20,18 +22,14 @@ public class SessionsServlet extends HttpServlet {
     //get logged user profile
     public void doGet(HttpServletRequest request,
                       HttpServletResponse response) throws ServletException, IOException {
-        String sessionId = request.getSession().getId();
-        UserProfile profile = accountService.getUserBySessionId(sessionId);
-        if (profile == null) {
-            response.setContentType("text/html;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        } else {
-            Gson gson = new Gson();
-            String json = gson.toJson(profile);
-            response.setContentType("text/html;charset=utf-8");
-            response.getWriter().println(json);
-            response.setStatus(HttpServletResponse.SC_OK);
+        StringBuilder result = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader("public_html/signInForm.html"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                result.append(line);
+            }
         }
+        response.getWriter().println(result);
     }
 
     //sign in
@@ -49,6 +47,7 @@ public class SessionsServlet extends HttpServlet {
         UserProfile profile = accountService.getUserByLogin(login);
         if (profile == null || !profile.getPass().equals(password)) {
             response.setContentType("text/html;charset=utf-8");
+            response.getWriter().println("Unauthorized");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -57,7 +56,8 @@ public class SessionsServlet extends HttpServlet {
         Gson gson = new Gson();
         String json = gson.toJson(profile);
         response.setContentType("text/html;charset=utf-8");
-        response.getWriter().println(json);
+        //response.getWriter().println(json);
+        response.getWriter().println("Authorized: " + login);
         response.setStatus(HttpServletResponse.SC_OK);
     }
 
