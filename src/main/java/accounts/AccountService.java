@@ -3,6 +3,11 @@ package accounts;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Данный класс реализует обработку всех действий с аккаунтом пользователя.
+ * Подобие работы с базой данных.
+ */
+
 public class AccountService {
     private final Map<String, UserProfile> loginToProfile;
     private final Map<String, UserProfile> sessionIdToProfile;

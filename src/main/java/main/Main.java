@@ -26,7 +26,7 @@ public class Main {
         resource_handler.setResourceBase("public_html");
 
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{resource_handler, context});
+        handlers.setHandlers(new Handler[]{resource_handler, context}); // Важен порядок, чем раньше указан - тем выше приоритет исполнения (первее исполнится)
 
         Server server = new Server(8080);
         server.setHandler(handlers);
