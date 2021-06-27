@@ -1,7 +1,0 @@
-First complete the next steps:
-Maven -> Lifecycle -> Clean
-Maven -> Lifecycle -> Package
-Maven -> Plugins-> assembly:single
-
-Then you can run .jar file from cmd (console) with next command:
-java -jar server.jar 
