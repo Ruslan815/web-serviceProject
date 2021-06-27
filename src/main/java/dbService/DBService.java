@@ -13,7 +13,8 @@ public class DBService {
     private final Connection connection;
 
     public DBService() {
-        this.connection = getH2Connection();
+        //this.connection = getH2Connection();
+        this.connection = getMysqlConnection();
     }
 
     public UsersDataSet getUser(long id) throws DBException {
@@ -24,11 +25,19 @@ public class DBService {
         }
     }
 
+    public void createTable() {
+        try {
+            UsersDAO dao = new UsersDAO(connection);
+            dao.createTable();
+        } catch (SQLException e) {
+            System.err.println("Cannot create a table in DB!");
+        }
+    }
+
     public long addUser(String name) throws DBException {
         try {
             connection.setAutoCommit(false);
             UsersDAO dao = new UsersDAO(connection);
-            dao.createTable();
             dao.insertUser(name);
             connection.commit();
             return dao.getUserId(name);
@@ -66,7 +75,6 @@ public class DBService {
         }
     }
 
-    @SuppressWarnings("UnusedDeclaration")
     public static Connection getMysqlConnection() {
         try {
             DriverManager.registerDriver((Driver) Class.forName("com.mysql.jdbc.Driver").newInstance());
@@ -77,9 +85,9 @@ public class DBService {
                     append("jdbc:mysql://").        //db type
                     append("localhost:").           //host name
                     append("3306/").                //port
-                    append("db_example?").          //db name
-                    append("user=tully&").          //login
-                    append("password=tully");       //password
+                    append("web-service_db?").      //db name
+                    append("user=root&").           //login
+                    append("password=");            //password
 
             System.out.println("URL: " + url + "\n");
 
