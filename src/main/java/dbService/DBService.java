@@ -2,6 +2,7 @@ package dbService;
 
 import dbService.dao.UsersDAO;
 import dbService.dataSets.UsersDataSet;
+
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -46,7 +47,7 @@ public class DBService {
 
         configuration.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
         configuration.setProperty("hibernate.connection.driver_class", "org.h2.Driver");
-        configuration.setProperty("hibernate.connection.url", "jdbc:h2:./h2db");
+        configuration.setProperty("hibernate.connection.url", "jdbc:h2:./users");
         configuration.setProperty("hibernate.connection.username", "tully");
         configuration.setProperty("hibernate.connection.password", "tully");
         configuration.setProperty("hibernate.show_sql", hibernate_show_sql);

@@ -1,6 +1,5 @@
 package main;
 
-
 import dbService.DBException;
 import dbService.DBService;
 import dbService.dataSets.UsersDataSet;
